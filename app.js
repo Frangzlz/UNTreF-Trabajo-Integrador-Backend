@@ -18,6 +18,21 @@ app.get('/api/productos', async (req, res) => {
   res.json(allProducts)
 })
 
+app.get('/api/productos/:id', async (req, res) => {
+  const id = parseInt(req.params.id)
+  try {
+    const product = await Product.findOne({ codigo: id })
+
+    if (!product) {
+      return res.status(404).json({ error: 'No existe un producto con ese codigo' })
+    }
+
+    return res.json(product)
+  } catch (err) {
+    res.status(500).json({ error: 'Error al tratar de obtener un producto' })
+  }
+})
+
 app.listen(PORT, async () => {
   await mongoose.connect(process.env.MONGODB_URI)
   console.log(`Server listening on: http://localhost:${PORT}`)
