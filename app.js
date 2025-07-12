@@ -6,6 +6,8 @@ const { Product } = require('./models/product')
 process.loadEnvFile()
 const PORT = process.env.PORT || 1234
 
+app.use(express.json())
+
 app.get('/', (req, res) => {
   res.send('Hola mundo')
 })
@@ -30,6 +32,23 @@ app.get('/api/productos/:id', async (req, res) => {
     return res.json(product)
   } catch (err) {
     res.status(500).json({ error: 'Error al tratar de obtener un producto' })
+  }
+})
+
+app.post('/api/productos', async (req, res) => {
+  const newProduct = new Product(req.body)
+
+  try {
+    const existe = await Product.findOne({ codigo: newProduct.codigo })
+
+    if (existe) {
+      return res.status(400).json({ error: 'Ya existe un producto con este codigo' })
+    }
+
+    const newSavedProduct = await newProduct.save()
+    return res.status(201).json(newSavedProduct)
+  } catch (err) {
+    return res.status(400).json({ error: 'Error al tratar de guardar el producto: ' + err })
   }
 })
 

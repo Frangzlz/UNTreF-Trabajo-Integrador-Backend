@@ -42,6 +42,15 @@ Content-Type: application/json
     "categoria": ["Accesorios", "Computación", "Gaming"]
 }
 
+### 3.1. Tratar de crear un nuevo producto defectuoso
+POST {{api_url}}/productos
+Content-Type: application/json
+
+{
+    "codigo": 103,
+    "precio": 65.50
+}
+
 ### 4. Modificar un producto existente
 # Reemplaza '1' con un código de producto que exista.
 # Solo se necesita enviar los campos a modificar.
