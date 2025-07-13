@@ -54,6 +54,10 @@ app.post('/api/productos', async (req, res) => {
 
 app.put('/api/productos/:codigo', async (req, res) => {
   const codigo = parseInt(req.params.codigo)
+
+  if (isNaN(codigo)) {
+    return res.status(400).json({ error: 'El codigo debe ser un numero' })
+  }
   
   try {
     const updatedProduct = await Product.findOneAndUpdate({ codigo }, req.body, { new: true })
@@ -64,7 +68,30 @@ app.put('/api/productos/:codigo', async (req, res) => {
 
     return res.json({updatedProduct})
   } catch (err) {
-    return res.status(500).json({ error: 'Error del servidor: ' + err})
+    return res.status(500).json({ error: 'Error interno del servidor'})
+  }
+})
+
+app.delete('/api/productos/:codigo', async (req, res) => {
+  const codigo = parseInt(req.params.codigo)
+
+  if (isNaN(codigo)) {
+    return res.status(400).json({ error: 'El codigo debe ser un numero' })
+  }
+
+  try {
+    const deletedProduct = await Product.findOneAndDelete({ codigo })
+  
+    if (!deletedProduct) {
+      return res.status(404).json({ error: 'No se pudo encontrar el producto a eliminar' })
+    }
+  
+    return res.json({
+      mensaje: 'Producto eliminado correctamente',
+      productoEliminado: deletedProduct
+    })
+  } catch (err) {
+    return res.status(500).json({ error: 'Error interno del servidor'})
   }
 })
 
