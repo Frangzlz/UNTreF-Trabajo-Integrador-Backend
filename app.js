@@ -20,6 +20,26 @@ app.get('/api/productos', async (req, res) => {
   res.json(allProducts)
 })
 
+app.get('/api/productos/buscar', async (req, res) => {
+  const query = req.query.q
+
+  if (!query) {
+    return res.status(400).json({ error: 'Para buscar se necesita el parametro ?q=' })
+  }
+
+  try {
+    const product = await Product.find({ nombre: { $regex: query, $options: 'i' } })
+
+    if (product.length === 0) {
+      return res.json({ mensaje: 'No se encontro ningun producto' })
+    }
+
+    res.json(product)
+  } catch (err) {
+    res.status(500).json({ error: 'Error al tratar de obtener un producto' })
+  }
+})
+
 app.get('/api/productos/:codigo', async (req, res) => {
   const codigo = parseInt(req.params.codigo)
   try {
