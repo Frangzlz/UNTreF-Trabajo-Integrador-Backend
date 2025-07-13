@@ -20,10 +20,10 @@ app.get('/api/productos', async (req, res) => {
   res.json(allProducts)
 })
 
-app.get('/api/productos/:id', async (req, res) => {
-  const id = parseInt(req.params.id)
+app.get('/api/productos/:codigo', async (req, res) => {
+  const codigo = parseInt(req.params.codigo)
   try {
-    const product = await Product.findOne({ codigo: id })
+    const product = await Product.findOne({ codigo })
 
     if (!product) {
       return res.status(404).json({ error: 'No existe un producto con ese codigo' })
@@ -49,6 +49,22 @@ app.post('/api/productos', async (req, res) => {
     return res.status(201).json(newSavedProduct)
   } catch (err) {
     return res.status(400).json({ error: 'Error al tratar de guardar el producto: ' + err })
+  }
+})
+
+app.put('/api/productos/:codigo', async (req, res) => {
+  const codigo = parseInt(req.params.codigo)
+  
+  try {
+    const updatedProduct = await Product.findOneAndUpdate({ codigo }, req.body, { new: true })
+
+    if (!updatedProduct) {
+      return res.status(404).json({ error: 'No se encontro el producto' })
+    }
+
+    return res.json({updatedProduct})
+  } catch (err) {
+    return res.status(500).json({ error: 'Error del servidor: ' + err})
   }
 })
 
