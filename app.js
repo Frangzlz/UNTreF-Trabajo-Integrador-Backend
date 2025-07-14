@@ -34,7 +34,7 @@ app.get('/api/productos/buscar', async (req, res) => {
       return res.json({ mensaje: 'No se encontro ningun producto' })
     }
 
-    res.json(product)
+    return res.json(product)
   } catch (err) {
     res.status(500).json({ error: 'Error al tratar de obtener un producto' })
   }
@@ -48,6 +48,27 @@ app.get('/api/productos/categoria/:nombre', async (req, res) => {
 
     if (products.length === 0) {
       return res.json({ mensaje: 'No se encontro ningun producto con esta categoria' })
+    }
+
+    return res.json(products)
+  } catch (err) {
+    res.status(500).json({ error: 'Error al tratar de obtener un producto' })
+  }
+})
+
+app.get('/api/productos/precio/:min-:max', async (req, res) => {
+  const min = parseInt(req.params.min)
+  const max = parseInt(req.params.max)
+
+  if (isNaN(min) || isNaN(max)) {
+    return res.status(400).json({ error: 'Los parametros (min y max) deben ser numeros enteros' })
+  }
+
+  try {
+    const products = await Product.find({ precio: { $gte: min, $lte: max } })
+  
+    if (products.length === 0) {
+      return res.json({ mensaje: 'No se encontro ningun producto con estos precios' })
     }
 
     return res.json(products)
