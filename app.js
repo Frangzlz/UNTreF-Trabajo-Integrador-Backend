@@ -109,6 +109,44 @@ app.post('/api/productos', async (req, res) => {
   }
 })
 
+app.post('/api/productos/masivo', async (req, res) => {
+  const products = req.body
+
+  if (products.length === 0) {
+    return res.status(400).json({ error: 'Se requiere un array de productos que no este vacio' })
+  }
+
+  const productsToAdd = []
+
+  for (let i = 0; i < products.length; i++) {
+    try {
+      if (typeof products[i].codigo !== 'number') continue
+
+      const existe = await Product.findOne({ codigo: products[i].codigo })
+  
+      if (existe) {
+        continue
+      }
+  
+      productsToAdd.push(products[i])
+    } catch {
+      return res.status(500).json({ error: 'Error interno del servidor'})
+    }
+  }
+
+  try {
+    const productsAdded = await Product.insertMany(productsToAdd)
+  
+    if (productsAdded.length === 0) {
+      return res.status(400).json({ error: 'Estos productos estan mal formados' })
+    }
+  
+    return res.status(201).json(productsAdded)
+  } catch {
+    return res.status(400).json({ error: 'Hay campos incompletos o mal formados' })
+  }
+})
+
 app.put('/api/productos/:codigo', async (req, res) => {
   const codigo = parseInt(req.params.codigo)
 

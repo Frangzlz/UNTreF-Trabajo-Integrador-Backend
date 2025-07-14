@@ -34,14 +34,14 @@ La API debe contar con los siguientes endpoints:
 ### CRUD Básico
 
 <details>
-  <summary><code>GET /productos</code></summary>
+  <summary><code>GET /productos</code>✅</summary>
 
   - **Descripción**: Devuelve la lista completa de productos del catálogo elegido.
   - **Respuesta Exitosa (200 OK)**: Un array con todos los objetos de producto.
 </details>
 
 <details>
-  <summary><code>GET /productos/:codigo</code></summary>
+  <summary><code>GET /productos/:codigo</code>✅</summary>
 
   - **Descripción**: Busca y devuelve un producto específico por su `código`.
   - **Parámetros de Ruta**: `:codigo` (numérico).
@@ -50,7 +50,7 @@ La API debe contar con los siguientes endpoints:
 </details>
 
 <details>
-  <summary><code>POST /productos</code></summary>
+  <summary><code>POST /productos</code>✅</summary>
 
   - **Descripción**: Agrega un nuevo producto al catálogo.
   - **Cuerpo de la Solicitud (Body)**: Un objeto JSON con la estructura de un producto. El `codigo` debe ser único.
@@ -59,7 +59,7 @@ La API debe contar con los siguientes endpoints:
 </details>
 
 <details>
-  <summary><code>PUT /productos/:codigo</code></summary>
+  <summary><code>PUT /productos/:codigo</code>✅</summary>
 
   - **Descripción**: Modifica un producto existente.
   - **Parámetros de Ruta**: `:codigo` (numérico).
@@ -69,7 +69,7 @@ La API debe contar con los siguientes endpoints:
 </details>
 
 <details>
-  <summary><code>DELETE /productos/:codigo</code></summary>
+  <summary><code>DELETE /productos/:codigo</code>✅</summary>
 
   - **Descripción**: Elimina un producto del catálogo.
   - **Parámetros de Ruta**: `:codigo` (numérico).
@@ -82,7 +82,7 @@ La API debe contar con los siguientes endpoints:
 Para profundizar en los conceptos de API REST, deberán implementar los siguientes 4 endpoints:
 
 <details>
-  <summary><code>GET /productos/buscar</code></summary>
+  <summary><code>GET /productos/buscar</code>✅</summary>
 
   - **Descripción**: Permite buscar productos cuyo nombre o descripción contenga un término específico.
   - **Query Params**: `q={termino_de_busqueda}`.
@@ -91,7 +91,7 @@ Para profundizar en los conceptos de API REST, deberán implementar los siguient
 </details>
 
 <details>
-  <summary><code>GET /productos/categoria/:nombre</code></summary>
+  <summary><code>GET /productos/categoria/:nombre</code>✅</summary>
 
   - **Descripción**: Filtra los productos que pertenezcan a una categoría específica.
   - **Parámetros de Ruta**: `:nombre` (string).
@@ -100,7 +100,7 @@ Para profundizar en los conceptos de API REST, deberán implementar los siguient
 </details>
 
 <details>
-  <summary><code>GET /productos/precio/:min-:max</code></summary>
+  <summary><code>GET /productos/precio/:min-:max</code>✅</summary>
 
   - **Descripción**: Devuelve los productos cuyo precio se encuentre dentro de un rango específico (ambos valores incluidos).
   - **Parámetros de Ruta**: `:min` (numérico) y `:max` (numérico), separados por un guion.
@@ -109,7 +109,7 @@ Para profundizar en los conceptos de API REST, deberán implementar los siguient
 </details>
 
 <details>
-  <summary><code>POST /productos/masivo</code></summary>
+  <summary><code>POST /productos/masivo</code>✅</summary>
 
   - **Descripción**: Permite agregar múltiples productos en una sola solicitud.
   - **Cuerpo de la Solicitud (Body)**: Un array de objetos JSON, donde cada objeto representa un nuevo producto.
