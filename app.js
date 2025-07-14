@@ -40,6 +40,22 @@ app.get('/api/productos/buscar', async (req, res) => {
   }
 })
 
+app.get('/api/productos/categoria/:nombre', async (req, res) => {
+  const categoria = req.params.nombre
+
+  try {
+    const products = await Product.find({ categoria: categoria })
+
+    if (products.length === 0) {
+      return res.json({ mensaje: 'No se encontro ningun producto con esta categoria' })
+    }
+
+    return res.json(products)
+  } catch (err) {
+    res.status(500).json({ error: 'Error al tratar de obtener un producto' })
+  }
+})
+
 app.get('/api/productos/:codigo', async (req, res) => {
   const codigo = parseInt(req.params.codigo)
   try {
