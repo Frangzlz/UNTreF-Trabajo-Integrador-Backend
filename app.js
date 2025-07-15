@@ -1,7 +1,7 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const app = express()
 const { Product } = require('./models/product')
+const { connectToDb } = require('./config/database')
 
 process.loadEnvFile()
 const PORT = process.env.PORT || 1234
@@ -191,6 +191,6 @@ app.delete('/api/productos/:codigo', async (req, res) => {
 })
 
 app.listen(PORT, async () => {
-  await mongoose.connect(process.env.MONGODB_URI)
+  await connectToDb()
   console.log(`Server listening on: http://localhost:${PORT}`)
 })

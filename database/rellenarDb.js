@@ -1,17 +1,12 @@
 const mongoose = require('mongoose')
 const products = require('../data/electronicos.json')
 const { Product } = require('../models/product')
-process.loadEnvFile('../.env')
+const { connectToDb } = require('../config/database')
+process.loadEnvFile('./.env')
 
 async function rellenarDb() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI)
-    console.log('Conectado a MongoDB')
-  } catch (err) {
-    console.log('Error al conectar con la DB: ', err)
-  }
-
-  try {
+    await connectToDb()
     const existencias = await Product.find()
     if (existencias.length > 0) {
       console.log('La base de datos ya posee entidades')
