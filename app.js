@@ -6,6 +6,7 @@ const routerProducts = require('./routes/productRoutes')
 process.loadEnvFile()
 const PORT = process.env.PORT || 1234
 
+// Middleware para los JSON
 app.use(express.json())
 
 app.get('/', (req, res) => {
