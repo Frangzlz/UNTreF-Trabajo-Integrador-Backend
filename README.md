@@ -1,37 +1,25 @@
 # Trabajo Integrador: API REST de Productos 🛍️
-
-¡Hola a todos!
-
-Bienvenidos al trabajo integrador del curso de Backend. En esta oportunidad, dejaremos de lado los trailers para sumergirnos en un desafío más representativo del mundo real: la construcción de una **API RESTful** para gestionar un catálogo de productos.
-
 ## Descripción del Proyecto 📋
 
 El objetivo es desarrollar una API utilizando **Express.js** que permita administrar una colección de productos. A diferencia de un sistema con una base de datos predefinida, aquí tendrán la libertad de elegir su propio conjunto de datos, lo que les permitirá adaptar la API a diferentes tipos de productos.
 
 La API deberá implementar un **CRUD básico** y, además, incluir una serie de **endpoints especializados** diseñados para que pongan en práctica los conceptos fundamentales de las API REST.
 
-### ¡Tu Misión, si decides aceptarla! 🚀
-
-Dentro del directorio `/data` encontrarán varios archivos `.json`, cada uno con una lista de productos de una categoría diferente (supermercado, electrónica, mobiliario, etc.).
-
-**Su primera tarea es elegir UNO de estos archivos.** Ese será el "catálogo" que gestionará su API. Deberán adaptar su código (especialmente el modelo) para que funcione correctamente con la estructura de datos del archivo que hayan seleccionado.
+**Archivo elegido**: Electronicos.json
 
 ## Modelo de Datos 📊
 
-Los datos de los productos tienen una estructura base que incluye `codigo`, `nombre`, `precio` y `categoria`. Notarán que, para hacerlo más realista, **el campo `categoria` es un array de strings**.
+Los datos de los productos tienen una estructura base que incluye `codigo`, `nombre`, `precio` y `categoria`.
+```js
+codigo: { type: Number, required: true },
+nombre: { type: String, required: true },
+precio: { type: Number, required: true },
+categoria: { type: [String], required: true }
+```
 
-Deberán definir un **modelo de Mongoose** que sea lo suficientemente flexible para manejar los productos del archivo JSON que elijan. Esto implica:
-1.  Conectar su aplicación a una base de datos de **MongoDB**.
-2.  Crear un `Schema` de Mongoose que se corresponda con la estructura de los datos.
-3.  Implementar una lógica (puede ser un script aparte o una ruta protegida) para **poblar la base de datos** una única vez con los datos del archivo `.json` seleccionado.
+## Endpoints
 
-> **¡IMPORTANTE!** 🔐 Para gestionar la cadena de conexión de MongoDB y otros datos sensibles, es fundamental que utilicen un archivo `.env`. **Nunca suban datos sensibles a un repositorio de Git**. Asegúrense de incluir el archivo `.env` y `node_modules` en su `.gitignore`.
-
-## Endpoints Requeridos 🔍
-
-La API debe contar con los siguientes endpoints:
-
-### CRUD Básico
+La API tiene los siguientes endpoints, /api:
 
 <details>
   <summary><code>GET /productos</code>✅</summary>
@@ -77,9 +65,7 @@ La API debe contar con los siguientes endpoints:
   - **Respuesta de Error (404 Not Found)**: Si el producto no se encuentra.
 </details>
 
-### Endpoints Adicionales (¡El verdadero desafío!)
-
-Para profundizar en los conceptos de API REST, deberán implementar los siguientes 4 endpoints:
+### Endpoints Adicionales
 
 <details>
   <summary><code>GET /productos/buscar</code>✅</summary>
@@ -135,19 +121,19 @@ Para organizar nuestro cronograma, tengan en cuenta las siguientes fechas:
 -   **Receso (22/07 al 31/07)**: En este período, realizarémos la **evaluación de los proyectos**.
 -   **Lunes 5 de Agosto**: Fecha límite para entregar las **correcciones y la versión final** del trabajo.
 
-## Estructura del Repositorio Sugerida 🗂️
-
-Pueden mantener la estructura que venían utilizando, asegurándose de incluir la configuración de la base de datos:
+## Estructura del Repositorio 🗂️
 
 ```plaintext
-/controllers
-  - productoController.js
 /config
   - database.js
+/controllers
+  - productoController.js
 /data
   - (varios archivos .json)
+/database
+  - rellenarDb.js
 /models
-  - producto.js
+  - product.js
 /routes
   - productoRoutes.js
 /app.js
